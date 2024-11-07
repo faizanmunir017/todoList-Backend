@@ -14,9 +14,21 @@ exports.addTask = async (req, res) => {
 exports.getTasks = async (req, res) => {
   try {
     const tasks = await User.find();
-    console.log("inside get: ", { tasks });
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({ message: "Failed to retrieve tasks", error });
+  }
+};
+
+exports.deleteTask = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedTask = await User.findByIdAndDelete(id);
+    if (!deletedTask) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+    res.status(200).json({ message: "Task deleted successfully", id });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to delete task", error });
   }
 };
