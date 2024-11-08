@@ -47,3 +47,22 @@ exports.toggleTask = async (req, res) => {
     res.status(500).json({ message: "Failed to toggle task", error });
   }
 };
+
+exports.editTask = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    const task = await User.findById(id);
+    const { newName } = req.body;
+    task.name = newName;
+    await task.save();
+    res.status(200).json(task);
+
+    if (!task) {
+      console.log("here");
+      return res.status(404).json({ message: "Task not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Failed to Edit Task" });
+  }
+};
