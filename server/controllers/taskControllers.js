@@ -51,7 +51,7 @@ exports.toggleTask = async (req, res) => {
 exports.editTask = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id);
+    // console.log(id);
     const task = await User.findById(id);
     const { newName } = req.body;
     task.name = newName;
