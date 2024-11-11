@@ -9,5 +9,6 @@ router.delete("/tasks/:id", taskController.deleteTask);
 router.patch("/tasks/:id/toggle", taskController.toggleTask);
 router.patch("/tasks/:id/edit", taskController.editTask);
 router.post("/register", userController.register);
+router.post("/login", userController.login);
 
 module.exports = router;
