@@ -1,10 +1,12 @@
-const User = require("../models/tasks");
+const tasks = require("../models/tasks");
 
 exports.addTask = async (req, res) => {
   try {
     const { name, completed } = req.body;
-    const newTask = new User({ name, completed });
+
+    const newTask = new tasks({ name, completed });
     await newTask.save();
+
     res.status(201).json(newTask);
   } catch (error) {
     res.status(500).json({ message: "Failed to add task", error });
@@ -13,7 +15,7 @@ exports.addTask = async (req, res) => {
 
 exports.getTasks = async (req, res) => {
   try {
-    const tasks = await User.find();
+    const tasks = await tasks.find();
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({ message: "Failed to retrieve tasks", error });
@@ -23,7 +25,7 @@ exports.getTasks = async (req, res) => {
 exports.deleteTask = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedTask = await User.findByIdAndDelete(id);
+    const deletedTask = await tasks.findByIdAndDelete(id);
     if (!deletedTask) {
       return res.status(404).json({ message: "Task not found" });
     }
@@ -36,7 +38,7 @@ exports.deleteTask = async (req, res) => {
 exports.toggleTask = async (req, res) => {
   try {
     const { id } = req.params;
-    const task = await User.findById(id);
+    const task = await tasks.findById(id);
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
     }
@@ -52,7 +54,7 @@ exports.editTask = async (req, res) => {
   try {
     const { id } = req.params;
     // console.log(id);
-    const task = await User.findById(id);
+    const task = await tasks.findById(id);
     const { newName } = req.body;
     task.name = newName;
     await task.save();
