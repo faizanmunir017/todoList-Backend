@@ -39,8 +39,9 @@ exports.login = async (req, res) => {
 
       if (res.status(201)) {
         return res.json({
+          code: "200",
           status: "ok",
-          data: token,
+          token,
           user: {
             _id: user._id,
             email: user.email,
@@ -48,10 +49,12 @@ exports.login = async (req, res) => {
           },
         });
       } else {
-        return res.json({ error: "error" });
+        return res.json({
+          error: "error",
+        });
       }
     }
-    res.json({ status: "invalid password entered" });
+    res.status(400).send({ error: "invalid password entered" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Failed to login User" });
