@@ -33,11 +33,19 @@ exports.login = async (req, res) => {
       return res.status(400).send({ error: "User does not exist" });
     }
 
-    if (await bycrypt.compare(password.user.password)) {
-      const token = jwt.sign({}, JWT_SECRET);
+    if (await bycrypt.compare(password, user.password)) {
+      const token = jwt.sign({ id: user._id }, JWT_SECRET);
 
       if (res.status(201)) {
-        return res.json({ status: "ok", data: token });
+        return res.json({
+          status: "ok",
+          data: token,
+          user: {
+            _id: user._id,
+            email: user.email,
+            password: user.password,
+          },
+        });
       } else {
         return res.json({ error: "error" });
       }
