@@ -35,7 +35,7 @@ exports.login = async (req, res) => {
 
     if (await bycrypt.compare(password, user.password)) {
       const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "1h" });
-      console.log("Token in :", token);
+      // console.log("Token in :", token);
 
       if (res.status(201)) {
         return res.json({

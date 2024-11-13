@@ -17,7 +17,7 @@ exports.addTask = async (req, res) => {
 
     const token =
       req.headers.authorization && req.headers.authorization.split(" ")[1];
-    console.log("token add tasks:", token);
+    // console.log("token add tasks:", token);
     const { id: userId } = getUserFromToken(token);
 
     const newTask = new Task({ name, completed, userId });
@@ -41,9 +41,9 @@ exports.getTasks = async (req, res) => {
     }
     const token =
       req.headers.authorization && req.headers.authorization.split(" ")[1];
-    console.log("token get tasks:", token);
+    // console.log("token get tasks:", token);
     const { id: userId } = getUserFromToken(token);
-    console.log(token);
+    // console.log(token);
     const tasks = await Task.find({ userId });
     res.status(200).json(tasks);
   } catch (error) {
