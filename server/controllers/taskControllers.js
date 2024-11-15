@@ -1,6 +1,5 @@
-const Task = require("../models/tasks");
-
-const jwt = require("jsonwebtoken");
+import Task from "../models/tasks.js";
+import jwt from "jsonwebtoken";
 const JWT_SECRET = "adjasdaskdaskdaskdjasdjakjdakjd()?31231231";
 
 const getUserFromToken = (token) => {
@@ -11,7 +10,7 @@ const getUserFromToken = (token) => {
   }
 };
 
-exports.addTask = async (req, res) => {
+export const addTask = async (req, res) => {
   try {
     const { name, completed } = req.body;
 
@@ -31,7 +30,7 @@ exports.addTask = async (req, res) => {
   }
 };
 
-exports.getTasks = async (req, res) => {
+export const getTasks = async (req, res) => {
   try {
     if (!req.headers.authorization) {
       return res.status(401).json({ message: "Authorization header missing" });
@@ -47,7 +46,7 @@ exports.getTasks = async (req, res) => {
   }
 };
 
-exports.deleteTask = async (req, res) => {
+export const deleteTask = async (req, res) => {
   try {
     const { id } = req.params;
     const deletedTask = await Task.findByIdAndDelete(id);
@@ -60,7 +59,7 @@ exports.deleteTask = async (req, res) => {
   }
 };
 
-exports.toggleTask = async (req, res) => {
+export const toggleTask = async (req, res) => {
   try {
     const { id } = req.params;
     const task = await Task.findById(id);
@@ -75,7 +74,7 @@ exports.toggleTask = async (req, res) => {
   }
 };
 
-exports.editTask = async (req, res) => {
+export const editTask = async (req, res) => {
   try {
     const { id } = req.params;
     const task = await Task.findById(id);
