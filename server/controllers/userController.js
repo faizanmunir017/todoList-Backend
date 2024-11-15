@@ -1,13 +1,12 @@
-const users = require("../models/users");
-const bycrypt = require("bcryptjs");
-
-const jwt = require("jsonwebtoken");
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import users from "../models/users.js";
 const JWT_SECRET = "adjasdaskdaskdaskdjasdjakjdakjd()?31231231";
 
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const encryptedPassword = await bycrypt.hash(password, 10);
+    const encryptedPassword = await bcrypt.hash(password, 10);
     const oldUser = await users.findOne({ email });
 
     if (oldUser) {
@@ -21,7 +20,7 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await users.findOne({ email });
@@ -30,7 +29,7 @@ exports.login = async (req, res) => {
       return res.status(400).send({ error: "User does not exist" });
     }
 
-    if (await bycrypt.compare(password, user.password)) {
+    if (await bcrypt.compare(password, user.password)) {
       const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "1h" });
 
       if (res.status(201)) {

@@ -1,10 +1,10 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const connectDB = require("./server/config/db");
-const taskRoutes = require("./server/Routes/taskRoutes");
-const cors = require("cors");
-require("dotenv").config();
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import connectDB from "./server/config/db.js";
+import taskRoutes from "./server/Routes/taskRoutes.js";
 
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
 

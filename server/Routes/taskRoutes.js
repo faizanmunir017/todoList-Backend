@@ -1,7 +1,8 @@
-const express = require("express");
+import express from "express";
+import * as taskController from "../controllers/taskControllers.js";
+import * as userController from "../controllers/userController.js";
+
 const router = express.Router();
-const taskController = require("../controllers/taskControllers");
-const userController = require("../controllers/userController");
 
 router.post("/tasks", taskController.addTask);
 router.get("/tasks", taskController.getTasks);
@@ -11,4 +12,4 @@ router.patch("/tasks/:id/edit", taskController.editTask);
 router.post("/register", userController.register);
 router.post("/login", userController.login);
 
-module.exports = router;
+export default router;
